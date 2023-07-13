@@ -10,7 +10,7 @@ export function SignInPage(){
     }
     return(
     <>
-    <strong>SignIn Page</strong>    
+    <strong onClick={handleTest}>SignIn Page</strong>    
     </>
     );
 }
