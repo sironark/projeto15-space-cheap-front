@@ -1,10 +1,15 @@
 
 
 export function SignInPage(){
-
+    const navigate = useNavigate()
+    
+    function handleTest(e){
+        e.preventDefault();
+        navigate('/produto')
+    }
     return(
     <>
-    <strong>SignIn Page</strong>    
+    <strong onClick={handleTest}>SignIn Page</strong>    
     </>
     );
 }
