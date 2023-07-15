@@ -3,36 +3,48 @@ import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
-import backgroundImage from "../assets/background.png"
+import backgroundImage from "../assets/background.png";
+
+
 
 export function SignInPage(){
-
-
-    const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const BaseURL = import.meta.env.VITE_API_URL
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
     function login(e) {
         e.preventDefault();
-        const URL = '';
+
         const body = { email, password };
     
-        const promise = axios.post(URL, body);
-        promise
-          .then((res) => {
-            localStorage.setItem('Image', res.data.image);
-            localStorage.setItem('Token', res.data.token);
-            navigate('/hoje');
-          })
-          .catch((err) => {
-            alert(err.response.data.message);
-          });
+        const promise = axios.post(`${BaseURL}/`,body)
+
+          promise.then(res => {
+          console.log(res.data)
+          const {_id, nome} = res.data.usuario
+          setUser({_id, nome})
+          localStorage.setItem('token',res.data.token)
+          setToken(res.data.token)
+          navigate('/home')
+        })
+        promise.catch(err => {
+          alert(err.response.data)
+          setEmail("")
+          setSenha("")
+          
+        })
+    
       }
 
     return(
     <>
         <Container>
-            <Logo/>
+
+            <Logo>
+              <h1>SPACECHEAP</h1>
+            </Logo>
+
             <Form onSubmit={login}>
                 <Input 
                 type="email" 
@@ -47,6 +59,7 @@ export function SignInPage(){
                 defaultValue={password}
                 onChange={(e) => setPassword(e.target.value)}
                 />
+                
                 <Button 
                 type="submit" 
                 onClick={login}
@@ -54,12 +67,14 @@ export function SignInPage(){
                 LOGIN
                 </Button>
             </Form>
+
             <Login>
                 <Link 
-                to={"/cadastro"}>
-                <p>Não tem uma conta? Cadastre-se!</p>
+                to={"/signup"}>
+                <p>DON'T HAVE AN ACCOUNT? REGISTER NOW!</p>
                 </Link>
             </Login>
+            
         </Container>
     </>
     )
@@ -76,20 +91,20 @@ const Form = styled.div`
 `;
 
 const Input = styled.input`
-  height: 63px;
-  width: 60%;
+  height: 52px;
+  width: 55%;
   background-color: white;
   text-align: center;
   font-size: 22px;
-  margin-top: 8px;
+
   text-align: left;
   color: white;
   font-weight: 900;
-  margin-top: 36px;
+  margin-top: 16px;
   border: 2px solid white;
   background-color: transparent; 
-  padding: 5px; 
-  font-family: 'pixel-art';
+  padding-left: 10px; 
+  font-family: 'Press Start 2P';
 
   ::placeholder {
     color: white;
@@ -102,18 +117,24 @@ const Input = styled.input`
 
 const Button = styled.button`
   background-color: #880F52;
-  height: 70px;
-  width: 246px;
+  height: 50px;
+  width: 200px;
   font-weight: 900;
   font-family: "Oswald";
-  font-size: 22px;
-  margin-top: 16px;
+  font-size: 30px;
+  margin-top: 80px;
+  color: white;
+  font-family: 'Press Start 2P';
+
 `;
 
 
-const Logo = styled.img`
-  width: 300px;
-  height: auto;
+const Logo = styled.h1`
+  font-size: 150px;
+  font-family: 'VT323';
+  color: white;
+  margin-top: 120px;
+  margin-bottom: 40px;
 `;
 
 const Container = styled.div`
@@ -134,10 +155,13 @@ justify-content: center;
 color: white;
 text-decoration: none;
 margin-top: 8px;
-font-family: "Oswald";
+font-family: 'Press Start 2P';
 font-weight: 300;
+
   	p {
       text-decoration: none;
       color: white;
+      margin-top: 30px;
+      font-size: 12px;
     }
 `
