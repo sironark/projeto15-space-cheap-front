@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import backgroundImage from "../assets/background.png";
+import spaceCheapLogo from "../assets/spacecheap.png"
 
 
 
@@ -41,9 +42,9 @@ export function SignInPage(){
     <>
         <Container>
 
-            <Logo>
-              <h1>SPACECHEAP</h1>
-            </Logo>
+            <Logo
+            src={spaceCheapLogo}
+            />
 
             <Form onSubmit={login}>
                 <Input 
@@ -74,7 +75,7 @@ export function SignInPage(){
                 <p>DON'T HAVE AN ACCOUNT? REGISTER NOW!</p>
                 </Link>
             </Login>
-            
+
         </Container>
     </>
     )
@@ -129,12 +130,11 @@ const Button = styled.button`
 `;
 
 
-const Logo = styled.h1`
-  font-size: 150px;
-  font-family: 'VT323';
-  color: white;
+const Logo = styled.img`
+  height: 100px;
+  width: auto;
   margin-top: 120px;
-  margin-bottom: 40px;
+  margin-bottom: 70px;
 `;
 
 const Container = styled.div`

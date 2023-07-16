@@ -3,7 +3,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
-import backgroundImage from "../assets/background.png"
+import backgroundImage from "../assets/background.png";
+import spaceCheapLogo from "../assets/spacecheap.png"
+
 
 
 export function SignUpPage(){
@@ -21,7 +23,6 @@ export function SignUpPage(){
         const promise = axios.post(URL, body);
         promise
           .then((res) => {
-            localStorage.setItem('Image', res.data.image);
             localStorage.setItem('Token', res.data.token);
             navigate('/');
           })
@@ -32,9 +33,11 @@ export function SignUpPage(){
     return(
     <>
         <Container>
-            <Logo>
-              <h1>SPACECHEAP</h1>
-              </Logo>
+
+            <Logo
+              src={spaceCheapLogo}
+            />  
+
             <Form onSubmit={login}>
                 <Input 
                 type="name" 
@@ -70,6 +73,7 @@ export function SignUpPage(){
                 data-test="register-btn">
                 REGISTER
                 </Button>
+
             </Form>
             <Login>
                 <Link 
@@ -129,11 +133,10 @@ const Button = styled.button`
 `;
 
 
-const Logo = styled.h1`
-  font-size: 150px;
-  font-family: 'VT323';
-  color: white;
-  margin-top: 10px;
+const Logo = styled.img`
+  height: 100px;
+  width: auto;
+  margin-top: 40px;
   margin-bottom: 20px;
 `;
 

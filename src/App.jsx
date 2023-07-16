@@ -6,6 +6,7 @@ import { SignInPage } from "./pages/SignInPage";
 import { SignUpPage } from "./pages/SignUpPage";
 import { UserContext } from "./contexts/UserContext";
 import { TokenContext } from "./contexts/TokenContext";
+import { useState } from "react";
 
 
 
@@ -13,7 +14,7 @@ export default function App() {
 
   const [user, setUser] = useState({})
   const [token, setToken] = useState({})
-  
+
   return (
     
       <BrowserRouter>
