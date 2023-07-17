@@ -17,7 +17,7 @@ export function SignUpPage(){
 
     function register(e) {
         e.preventDefault();
-        const URL = ''
+        const URL = 'http://localhost:5000/sign-up'
 
         const body = { name, email, password };
     
@@ -39,7 +39,7 @@ export function SignUpPage(){
               src={spaceCheapLogo}
             />  
 
-            <Form onSubmit={login}>
+            <Form onSubmit={register}>
                 <Input 
                   type="name" 
                   placeholder="NAME" 

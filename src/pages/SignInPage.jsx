@@ -7,7 +7,7 @@ import spaceCheapLogo from "../assets/spacecheap.png"
 import { UserContext } from '../contexts/UserContext';
 
 export function SignInPage() {
-  const BaseURL = '';
+  const BaseURL = 'http://localhost:5000/sign-in';
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,8 +15,9 @@ export function SignInPage() {
 
   function login(e) {
     const body = { email, password };
+  
 
-    const promise = axios.post(`${BaseURL}/`, body);
+    const promise = axios.post(`${BaseURL}`, body);
 
     promise.then(res => {
       console.log(res.data);
@@ -28,7 +29,7 @@ export function SignInPage() {
     });
 
     promise.catch(err => {
-      alert(err.response.data);
+      console(err.response.data);
       setEmail("");
       setPassword("");
     });

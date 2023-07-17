@@ -1,9 +1,13 @@
 
 import { styled } from "styled-components";
 import { RenderCart } from "../components/RenderCart";
+import { useContext, useEffect, useState } from "react";
+import { CartContext } from "../context/CartContext";
+
 
 export function CartPage(){
-  
+    const {totalPrice, price} = useContext(CartContext)
+    
     return(
     
     <ContainerBody>
@@ -13,13 +17,20 @@ export function CartPage(){
                 <h1>AMOUNT</h1>
                 <h1>PRICE</h1>
             </div>
-            <ul className="cartProducts">
-                <RenderCart/>
-            </ul>
-
-
+           
+            <RenderCart/>
+        
         </RenderProducts>
-     
+
+        <p className="total">TOTAL {price + totalPrice}</p>
+        <div className="containerBottom">
+        <div className="address">
+            <p>ADDRESS</p>
+            <textarea placeholder="write your address and addicional informations" type="text" wrap="hard"></textarea>
+        </div>
+        <div className="purchase" onClick={()=> alert("finalizado")}>PURCHASE</div>
+        </div>
+
     </ContainerBody> 
     
     );
@@ -33,15 +44,78 @@ const ContainerBody = styled.main`
     padding: 50px;
     box-sizing: border-box;
     font-family: 'VT323', monospace;
+    .total{
+        color: white;
+        font-size: 40px;
+        position: absolute;
+        right: 85px;
+    }
+    .containerBottom{
+        display: flex;
+        position: relative;
+        .address{
+            width:700px;
+            height: 384px;
+            margin-top: 80px;
+            color: white;
+            border: 1px solid white;
+            position: absolute;
+            padding: 10px;
+            box-sizing: border-box;
+            position: absolute;
+            p{
+                font-size: 20px;
+                position: absolute;
+                left: 10px;
+                top:10px
+            }
+            textarea{
+                margin-top: 40px;
+                width: 100%;
+                height: 300px;
+                border: none;
+                background: none;
+                color: white;
+                font-style: bold;
+                font-family: 'VT323', monospace;
+                font-size: 36px;
+                text-transform: uppercase;
+                
+            }
+        ::-webkit-input-placeholder{
+            color: white;
+            text-transform: uppercase;
+            font-style: bold;
+            font-family: 'VT323', monospace;
+            font-size: 36px;
+            
+    }
+        }
+        .purchase{
+            width: 260px;
+            height: 50px;
+            background-color: #880F52;
+            position: absolute;
+            right: 30px;
+            top: 400px;
+
+            font-family: 'VT323', monospace;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 40px;
+            padding-top: 7px;
+        }
+    }
 `
+
 const RenderProducts = styled.div`
     width: 100%;
     height: 200px;
     position: relative;
     color: white;
     border: 1px solid white;
-    overflow-y: scroll;
-    
+    overflow-y: hidden;
 
     .title{
         font-size: 20px;
@@ -63,13 +137,13 @@ const RenderProducts = styled.div`
     }
 
     .cartProducts{
-        font-size: 30px;
+        font-size: 40px;
         display: flex;
         flex-direction: column;
         padding-top: 50px;
         box-sizing: border-box;
         li{
-            font-size: 30x;
+            font-size: 40x;
             position: relative;
             width: 100%;
             height: 30px;
@@ -85,14 +159,14 @@ const RenderProducts = styled.div`
                 right: 40px;
             }
             
-            input{
+            div{
                 position: absolute;
-                right: 296px;
+                right: 298px;
                 top: 0px;
                 background: none;
                 border: none;
                 font-family: 'Press Start 2P', cursive;
-                font-size: 30px;
+                font-size: 40px;
                 width: 35px;
                 color:white;
             }
