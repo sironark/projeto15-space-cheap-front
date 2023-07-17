@@ -14,7 +14,7 @@ const{user} = useContext(UserContext)
     useEffect( () =>{
         const{shipId} = useContext(ShipContext)
         
-        axios.get(`http://localhost:5000/product/${shipId}`)
+        axios.get(`${import.meta.env.VITE_API_URL}/product/${shipId}`)
         .then((res)=>{
             console.log(res.data)
             setInfo({...res.data})

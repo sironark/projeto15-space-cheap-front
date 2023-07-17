@@ -1,4 +1,4 @@
-const ships = [
+const products = [
     {
         name: "party ship",
         description: " it has side lights and a steel structure, with a vaulted shape. a simpler ship, but perfect for a good space party",
@@ -31,4 +31,4 @@ const ships = [
         }
     ]
 
-export default ships
+export default products

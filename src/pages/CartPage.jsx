@@ -25,7 +25,7 @@ export function CartPage(){
         const confirm = window.confirm(`Tem certeza que deseja finalizar compra? Descrição: ${form.description}`)
         if(!confirm) return 
         
-        axios.delete(`http://localhost:5000/purchase/${_id}`)
+        axios.delete(`${import.meta.env.VITE_API_URL}/purchase/${_id}`)
         .then((res)=>{
             navigate('/')
         })

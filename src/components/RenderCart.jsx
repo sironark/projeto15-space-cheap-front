@@ -15,7 +15,7 @@ export function RenderCart(){
 
     function getCart(){
         const _id = '123456789'
-        axios.get(`http://localhost:5000/cart/${_id}`)
+        axios.get(`${import.meta.env.VITE_API_URL}/cart/${_id}`)
             .then((res) =>{
                 setCartList(res.data)
                 console.log(res.data)       

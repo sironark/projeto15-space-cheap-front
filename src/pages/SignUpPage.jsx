@@ -24,7 +24,7 @@ export function SignUpPage(){
 
     function register(e) {
         e.preventDefault();
-        const URL = 'http://localhost:5000/sign-up'
+        const URL = `${import.meta.env.VITE_API_URL}/sign-up`
 
         if(form.password != form.confPassword) return alert("senhas diferentes")
           delete form.confPassword
