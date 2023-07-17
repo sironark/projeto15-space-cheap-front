@@ -14,22 +14,30 @@ export function SignUpPage(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
+    const [confPassword, setConfPassword ] = useState('')
+
+    const [form, setForm] = useState({ name:"", email: "", password: "", confPassword:"" })
+
+    function handleForm(e) {
+        setForm({ ...form, [e.target.name]: e.target.value })
+    }
 
     function register(e) {
         e.preventDefault();
         const URL = 'http://localhost:5000/sign-up'
 
-        const body = { name, email, password };
-    
-        const promise = axios.post(URL, body);
+        if(form.password != form.confPassword) return alert("senhas diferentes")
+          delete form.confPassword
+
+        const promise = axios.post(URL, form);
         promise
           .then((res) => {
-            localStorage.setItem('Token', res.data.token);
             navigate('/login');
           })
           .catch((err) => {
             alert(err.response.data.message);
           });
+        
       }
     return(
     <>
@@ -41,37 +49,42 @@ export function SignUpPage(){
 
             <Form onSubmit={register}>
                 <Input 
+                  value={form.name}
                   type="name" 
                   placeholder="NAME" 
-                  defaultValue={name} 
-                  onChange={(e) => setName(e.target.value)} 
+                  required
+                  name='name'
+                  onChange={handleForm} 
                 />
             
                 <Input
+                  value={form.email}
                   type="email"
                   placeholder="EMAIL"
-                  defaultValue={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  name='email'
+                  onChange={handleForm}
                 />
                 
                 <Input
+                  value={form.password}
                   type="password"
                   placeholder="PASSWORD"
-                  defaultValue={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  name="password"
+                  onChange={handleForm}
                 />
 
                 <Input
+                  value={form.confPassword}
                   type="password"
+                  name='confPassword'
                   placeholder="CONFIRM PASSWORD"
-                  defaultValue={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  onChange={handleForm}
                 />
 
-                <Button 
-                  type="submit" 
-                  onClick={register}
-                  data-test="register-btn">
+                <Button type="submit" >
                   REGISTER
                 </Button>
             </Form>
@@ -88,7 +101,7 @@ export function SignUpPage(){
     )
 }
 
-const Form = styled.div`
+const Form = styled.form`
   width: 100vw ;
   display: flex;
   justify-content: center;

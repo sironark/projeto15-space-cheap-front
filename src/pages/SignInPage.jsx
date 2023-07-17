@@ -5,33 +5,36 @@ import axios from "axios";
 import backgroundImage from "../assets/background.png";
 import spaceCheapLogo from "../assets/spacecheap.png"
 import { UserContext } from '../contexts/UserContext';
+import { TokenContext } from '../contexts/TokenContext';
 
 export function SignInPage() {
-  const BaseURL = 'http://localhost:5000/sign-in';
+  const BaseURL = 'http://localhost:5000/login';
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { setToken, setUser } = useContext(UserContext);
+  const {setUser } = useContext(UserContext);
+  const {setToken} = useContext(TokenContext)
+
+  const [form, setForm] = useState({ email: "", password: ""})
+
+    function handleForm(e) {
+        setForm({ ...form, [e.target.name]: e.target.value })
+    }
 
   function login(e) {
-    const body = { email, password };
-  
+    e.preventDefault()
+    const promise = axios.post(`${BaseURL}`, form);
+      promise.then(res => {
+        console.log(res.data);
+        const { token, userName, userId } = res.data;
 
-    const promise = axios.post(`${BaseURL}`, body);
-
-    promise.then(res => {
-      console.log(res.data);
-      const { _id, name } = res.data.usuario;
-      setUser({ _id, nome });
-      localStorage.setItem('token', res.data.token);
-      setToken(res.data.token);
-      navigate('/')
-    });
+        setUser({ userId, userName });
+        setToken(token);
+        navigate('/')
+      });
 
     promise.catch(err => {
-      console(err.response.data);
-      setEmail("");
-      setPassword("");
+      console.log(err.response.data);
     });
   }
 
@@ -44,18 +47,22 @@ export function SignInPage() {
           <Input
             type="email"
             placeholder="EMAIL"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={form.email}
+            name='email'
+            onChange={handleForm}
+            required
           />
 
           <Input
             type="password"
             placeholder="PASSWORD"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={form.password}
+            name='password'
+            onChange={handleForm}
+            required
           />
 
-          <Button type="submit" data-test="login-btn">
+          <Button type="submit">
             LOGIN
           </Button>
         </Form>
