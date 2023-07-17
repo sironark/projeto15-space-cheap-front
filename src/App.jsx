@@ -1,32 +1,34 @@
+import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { CartPage } from "./pages/CartPage";
-import { HomePage } from "./pages/HomePage";
-import { SignInPage } from "./pages/SignInPage";
-import { SignUpPage } from "./pages/SignUpPage";
-import { useState } from "react";
-import { CartContext } from "./context/CartContext";
-import ProductPage from "./pages/ProductPage";
-
+import { CartPage } from "./pages/CartPage.jsx";
+import { HomePage } from "./pages/HomePage.jsx";
+import { ProductPage } from "./pages/ProductPage.jsx"
+import { SignInPage } from "./pages/SignInPage.jsx";
+import { SignUpPage } from "./pages/SignUpPage.jsx";
+import { UserContext } from "./contexts/UserContext.js";
+import { TokenContext } from "./contexts/TokenContext.js";
+import { CartContext } from "./context/CartContext.js";
 
 export default function App() {
-  const [totalPrice, setTotalPrice] = useState(0)
-  
+  const [user, setUser] = useState({});
+  const [token, setToken] = useState({});
+  const [totalPrice, setTotalPrice] = useState(0);
 
   return (
-    
-      <BrowserRouter>
-      <CartContext.Provider value={{totalPrice,setTotalPrice}}>
-        <Routes>
-          <Route path="/" element={<SignInPage />} />
-          <Route path="/cadastro" element={<SignUpPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/carrinho" element={<CartPage/>} />
-          <Route path="/produto" element={<ProductPage/>} />
-        </Routes>
-        </CartContext.Provider>
-      </BrowserRouter>
-    
-  )
+    <BrowserRouter>
+      <TokenContext.Provider value={{ token, setToken }}>
+        <UserContext.Provider value={{ user, setUser }}>
+          <CartContext.Provider value={{ totalPrice, setTotalPrice }}>
+            <Routes>
+              <Route path="/login" element={<SignInPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/product" element={<ProductPage />} />
+            </Routes>
+          </CartContext.Provider>
+        </UserContext.Provider>
+      </TokenContext.Provider>
+    </BrowserRouter>
+  );
 }
-
-

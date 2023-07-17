@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import styled from "styled-components"
 
 
-export default function ProductPage(){
+export function ProductPage(){
 const [info, setInfo]= useState()
 
 
