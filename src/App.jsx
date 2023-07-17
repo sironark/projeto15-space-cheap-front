@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { CartPage } from "./pages/CartPage";
 import { HomePage } from "./pages/HomePage";
-import { ProductPage } from "./pages/ProductPage";
 import { SignInPage } from "./pages/SignInPage";
 import { SignUpPage } from "./pages/SignUpPage";
 import { useState } from "react";
 import { CartContext } from "./context/CartContext";
+import ProductPage from "./pages/ProductPage";
 
 
 export default function App() {

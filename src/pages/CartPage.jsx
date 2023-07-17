@@ -3,10 +3,33 @@ import { styled } from "styled-components";
 import { RenderCart } from "../components/RenderCart";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 export function CartPage(){
     const {totalPrice} = useContext(CartContext)
+    const navigate = useNavigate()
+    const [form, setForm] = useState({ description: ""})
+
+    function handleForm(e) {
+        setForm({ ...form, [e.target.name]: e.target.value })
+    }
+
+    function purchase(e){
+        e.preventDefault()
+        const _id = 123456789
+        console.log(form)
+        
+        const confirm = window.confirm(`Tem certeza que deseja finalizar compra? Descrição: ${form.description}`)
+        if(!confirm) return 
+        
+        axios.delete(`http://localhost:5000/purchase/${_id}`)
+        .then((res)=>{
+            navigate('/')
+        })
+        .catch(err => console.log(err))
+    }
     
     return(
     
@@ -26,9 +49,16 @@ export function CartPage(){
         <div className="containerBottom">
         <div className="address">
             <p>ADDRESS</p>
-            <textarea placeholder="write your address and addicional informations" type="text" wrap="hard"></textarea>
+
+            <textarea name = "description" 
+            onChange={handleForm} 
+            value={form.description} 
+            placeholder="write your address and addicional informations" 
+            type="text" 
+            wrap="hard"></textarea>
+
         </div>
-        <div className="purchase" onClick={()=> alert("finalizado")}>PURCHASE</div>
+        <div className="purchase" onClick={purchase}>PURCHASE</div>
         </div>
     </ContainerBody> 
     
