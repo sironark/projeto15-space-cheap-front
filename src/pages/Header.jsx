@@ -1,20 +1,25 @@
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom";
-import {useState } from "react";
+import {useContext, useState } from "react";
 import spaceCheapLogo from "../assets/spacecheap.png"
+import { TokenContext } from "../contexts/TokenContext.js";
 
 export function Header() {
     const navigate = useNavigate();
     const [NomeBotao, setBotão] = useState("LOGIN")
-
+    const {token, setToken} = useContext(TokenContext)
 
     function movingPage(event) {
         if (token) {
-            navigate("/home")
+            console.log("home")
+            navigate("/")
             setBotão("EXIT")
+            setToken('')
+            //logout
         } else {
-            navigate("/login")
+            console.log("login")
+            navigate("/signin")
         }
     }
 
@@ -44,13 +49,12 @@ export function Header() {
 
 const StyledLogoConteiner = styled.div`
     width:100%;
-    heigth:162px;
+    height:162px;
     display: flex;
     justify-content: center; 
     margin: 40px 0 40px 0;
     color: #ffffff;
     font-size: 15px;
-    }
     `
 const Logo = styled.div`
 width:80%;
@@ -74,5 +78,5 @@ const ConteinerPages = styled.div`
             font-size: 30px;
 
         }
-    }
+    
 `

@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Header } from "./Header";
 
 
 export function CartPage(){
@@ -32,7 +33,8 @@ export function CartPage(){
     }
     
     return(
-    
+    <>
+    <Header/>
     <ContainerBody>
         <RenderProducts>
             <div className="title">
@@ -61,14 +63,12 @@ export function CartPage(){
         <div className="purchase" onClick={purchase}>PURCHASE</div>
         </div>
     </ContainerBody> 
-    
+    </>
     );
 }
 
 const ContainerBody = styled.main`
-    background-image: url('/assets/image1.svg');
-    background-repeat: no-repeat;
-    background-size: cover;
+    
     height: calc(100vh);
     padding: 50px;
     box-sizing: border-box;

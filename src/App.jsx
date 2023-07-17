@@ -8,19 +8,21 @@ import { SignUpPage } from "./pages/SignUpPage.jsx";
 import { UserContext } from "./contexts/UserContext.js";
 import { TokenContext } from "./contexts/TokenContext.js";
 import { CartContext } from "./context/CartContext.js";
+import { ShipContext } from "./contexts/ShipContext.js";
 
 export default function App() {
   const [user, setUser] = useState({});
   const [token, setToken] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
-
+  const [shipId, setShipId] = useState(0);
   return (
     <BrowserRouter>
+    <ShipContext.Provider value={{shipId, setShipId}}>
       <TokenContext.Provider value={{ token, setToken }}>
         <UserContext.Provider value={{ user, setUser }}>
           <CartContext.Provider value={{ totalPrice, setTotalPrice }}>
             <Routes>
-              <Route path="/login" element={<SignInPage />} />
+              <Route path="/signin" element={<SignInPage />} />
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/" element={<HomePage />} />
               <Route path="/cart" element={<CartPage />} />
@@ -29,6 +31,7 @@ export default function App() {
           </CartContext.Provider>
         </UserContext.Provider>
       </TokenContext.Provider>
+      </ShipContext.Provider>
     </BrowserRouter>
   );
 }

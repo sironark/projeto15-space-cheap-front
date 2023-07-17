@@ -32,7 +32,7 @@ export function SignUpPage(){
         const promise = axios.post(URL, form);
         promise
           .then((res) => {
-            navigate('/login');
+            navigate('/signin');
           })
           .catch((err) => {
             alert(err.response.data.message);

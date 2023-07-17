@@ -1,15 +1,20 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import styled from "styled-components"
+import { Header } from "./Header.jsx";
+import { UserContext } from "../contexts/UserContext.js";
+import { ShipContext } from "../contexts/ShipContext.js";
 
 
 export function ProductPage(){
 const [info, setInfo]= useState()
-
+const{user} = useContext(UserContext)
 
     useEffect( () =>{
-        axios.get("http://localhost:5000/product/")
+        const{shipId} = useContext(ShipContext)
+        
+        axios.get(`http://localhost:5000/product/${shipId}`)
         .then((res)=>{
             console.log(res.data)
             setInfo({...res.data})
@@ -24,7 +29,8 @@ const [info, setInfo]= useState()
 
 
 return(
-    
+    <>
+    <Header/>
     <PageProductSyled>
         <HeadStyled>
             <div>
@@ -53,6 +59,7 @@ return(
            
         </ContainerInfo>
     </PageProductSyled>
+    </>
 )
 }
 
