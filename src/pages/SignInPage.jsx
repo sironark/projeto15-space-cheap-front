@@ -1,88 +1,76 @@
-
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import backgroundImage from "../assets/background.png";
 import spaceCheapLogo from "../assets/spacecheap.png"
+import { UserContext } from '../contexts/UserContext';
 
-
-
-export function SignInPage(){
-  const BaseURL = import.meta.env.VITE_API_URL
+export function SignInPage() {
+  const BaseURL = '';
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { setToken, setUser } = useContext(UserContext);
 
-    function login(e) {
-        e.preventDefault();
+  function login(e) {
+    const body = { email, password };
 
-        const body = { email, password };
-    
-        const promise = axios.post(`${BaseURL}/`,body)
+    const promise = axios.post(`${BaseURL}/`, body);
 
-          promise.then(res => {
-          console.log(res.data)
-          const {_id, nome} = res.data.usuario
-          setUser({_id, nome})
-          localStorage.setItem('token',res.data.token)
-          setToken(res.data.token)
-          navigate('/home')
-        })
-        promise.catch(err => {
-          alert(err.response.data)
-          setEmail("")
-          setSenha("")
-          
-        })
-    
-      }
+    promise.then(res => {
+      console.log(res.data);
+      const { _id, name } = res.data.usuario;
+      setUser({ _id, nome });
+      localStorage.setItem('token', res.data.token);
+      setToken(res.data.token);
+      navigate('/')
+    });
 
-    return(
+    promise.catch(err => {
+      alert(err.response.data);
+      setEmail("");
+      setPassword("");
+    });
+  }
+
+  return (
     <>
-        <Container>
+      <Container>
+        <Logo src={spaceCheapLogo} />
 
-            <Logo
-            src={spaceCheapLogo}
-            />
+        <Form onSubmit={login}>
+          <Input
+            type="email"
+            placeholder="EMAIL"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-            <Form onSubmit={login}>
-                <Input 
-                type="email" 
-                placeholder="EMAIL" 
-                defaultValue={email} 
-                onChange={(e) => setEmail(e.target.value)} 
-                />
-            
-                <Input
-                type="password"
-                placeholder="PASSWORD"
-                defaultValue={password}
-                onChange={(e) => setPassword(e.target.value)}
-                />
-                
-                <Button 
-                type="submit" 
-                onClick={login}
-                data-test="login-btn">
-                LOGIN
-                </Button>
-            </Form>
+          <Input
+            type="password"
+            placeholder="PASSWORD"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-            <Login>
-                <Link 
-                to={"/signup"}>
-                <p>DON'T HAVE AN ACCOUNT? REGISTER NOW!</p>
-                </Link>
-            </Login>
+          <Button type="submit" data-test="login-btn">
+            LOGIN
+          </Button>
+        </Form>
 
-        </Container>
+        <Login>
+          <Link to={"/signup"}>
+            <p>DON'T HAVE AN ACCOUNT? REGISTER NOW!</p>
+          </Link>
+        </Login>
+      </Container>
     </>
-    )
+  );
 }
 
-const Form = styled.div`
-  width: 100vw ;
+const Form = styled.form`
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -103,17 +91,13 @@ const Input = styled.input`
   font-weight: 900;
   margin-top: 16px;
   border: 2px solid white;
-  background-color: transparent; 
-  padding-left: 10px; 
+  background-color: transparent;
+  padding-left: 10px;
   font-family: 'Press Start 2P';
 
   ::placeholder {
     color: white;
   }
-  input::placeholder {
-    color:white;
-  }
-
 `;
 
 const Button = styled.button`
@@ -126,9 +110,7 @@ const Button = styled.button`
   margin-top: 80px;
   color: white;
   font-family: 'Press Start 2P';
-
 `;
-
 
 const Logo = styled.img`
   height: 100px;
@@ -147,21 +129,22 @@ const Container = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-`
-const Login = styled.div`
-width: 60%;
-display: flex;
-justify-content: center;
-color: white;
-text-decoration: none;
-margin-top: 8px;
-font-family: 'Press Start 2P';
-font-weight: 300;
+`;
 
-  	p {
-      text-decoration: none;
-      color: white;
-      margin-top: 30px;
-      font-size: 12px;
-    }
-`
+const Login = styled.div`
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  margin-top: 8px;
+  font-family: 'Press Start 2P';
+  font-weight: 300;
+
+  p {
+    text-decoration: none;
+    color: white;
+    margin-top: 30px;
+    font-size: 12px;
+  }
+`;

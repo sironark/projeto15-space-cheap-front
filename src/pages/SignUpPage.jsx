@@ -15,16 +15,17 @@ export function SignUpPage(){
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
 
-    function login(e) {
+    function register(e) {
         e.preventDefault();
-        const URL = '';
+        const URL = ''
+
         const body = { name, email, password };
     
         const promise = axios.post(URL, body);
         promise
           .then((res) => {
             localStorage.setItem('Token', res.data.token);
-            navigate('/');
+            navigate('/login');
           })
           .catch((err) => {
             alert(err.response.data.message);
@@ -40,47 +41,48 @@ export function SignUpPage(){
 
             <Form onSubmit={login}>
                 <Input 
-                type="name" 
-                placeholder="NAME" 
-                defaultValue={name} 
-                onChange={(e) => setName(e.target.value)} 
+                  type="name" 
+                  placeholder="NAME" 
+                  defaultValue={name} 
+                  onChange={(e) => setName(e.target.value)} 
                 />
             
                 <Input
-                type="email"
-                placeholder="EMAIL"
-                defaultValue={email}
-                onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                  placeholder="EMAIL"
+                  defaultValue={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 
                 <Input
-                type="password"
-                placeholder="PASSWORD"
-                defaultValue={password}
-                onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  placeholder="PASSWORD"
+                  defaultValue={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
 
                 <Input
-                type="password"
-                placeholder="CONFIRM PASSWORD"
-                defaultValue={password}
-                onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  placeholder="CONFIRM PASSWORD"
+                  defaultValue={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
 
                 <Button 
-                type="submit" 
-                onClick={login}
-                data-test="register-btn">
-                REGISTER
+                  type="submit" 
+                  onClick={register}
+                  data-test="register-btn">
+                  REGISTER
                 </Button>
-
             </Form>
+
             <Login>
                 <Link 
-                to={"/login"}>
-                <p>ALREADY HAVE AN ACCOUNT? SIGN IN!</p>
+                  to={"/login"}>
+                  <p>ALREADY HAVE AN ACCOUNT? SIGN IN!</p>
                 </Link>
             </Login>
+
         </Container>
     </>
     )
