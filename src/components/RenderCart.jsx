@@ -17,7 +17,8 @@ export function RenderCart(){
         const _id = '123456789'
         axios.get(`http://localhost:5000/cart/${_id}`)
             .then((res) =>{
-                setCartList(res.data)       
+                setCartList(res.data)
+                console.log(res.data)       
             })
             .catch(err => console.log(err.message.data))      
     }

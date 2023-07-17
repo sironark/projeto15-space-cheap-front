@@ -6,7 +6,7 @@ import { CartContext } from "../context/CartContext";
 
 
 export function CartPage(){
-    const {totalPrice, price} = useContext(CartContext)
+    const {totalPrice} = useContext(CartContext)
     
     return(
     
@@ -22,7 +22,7 @@ export function CartPage(){
         
         </RenderProducts>
 
-        <p className="total">TOTAL {price + totalPrice}</p>
+        <p className="total">TOTAL: {totalPrice}</p>
         <div className="containerBottom">
         <div className="address">
             <p>ADDRESS</p>
@@ -30,7 +30,6 @@ export function CartPage(){
         </div>
         <div className="purchase" onClick={()=> alert("finalizado")}>PURCHASE</div>
         </div>
-
     </ContainerBody> 
     
     );
@@ -115,8 +114,11 @@ const RenderProducts = styled.div`
     position: relative;
     color: white;
     border: 1px solid white;
-    overflow-y: hidden;
+    overflow: auto;
 
+    ::-webkit-scrollbar{
+        width: 1px;
+    }    
     .title{
         font-size: 20px;
         position: relative;
@@ -137,6 +139,7 @@ const RenderProducts = styled.div`
     }
 
     .cartProducts{
+        
         font-size: 40px;
         display: flex;
         flex-direction: column;
